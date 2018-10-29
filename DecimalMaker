@@ -1,7 +1,0 @@
-        double transactionAmount = Double.parseDouble("1.0");
-        DecimalFormat df = new DecimalFormat("#.00");
-        BigDecimal dec = BigDecimal.valueOf(transactionAmount);
-        dec = dec.setScale(2, RoundingMode.DOWN);
-        transactionAmount = dec.doubleValue();
-        String amount = df.format(transactionAmount);
-        amount = amount.replace(".", "");
