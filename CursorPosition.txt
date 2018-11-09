@@ -1,0 +1,9 @@
+int width=Screen.AllScreens[1].Bounds.Width;
+int height=Screen.AllScreens[1].Bounds.Height;
+Cursor.Position=new Point(width/2,height/2);
+
+
+
+https://stackoverflow.com/questions/4627553/show-jframe-in-a-specific-screen-in-dual-monitor-configuration
+
+https://stackoverflow.com/questions/22086871/how-to-detect-the-screen-position-in-a-system-with-multiple-displays
