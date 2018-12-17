@@ -1,4 +1,8 @@
-'Run As CScript in CMD via .bat file
+'Run via below in a .bat file as admin
+'cd %~dp0
+'CScript InstallCerts.vbs
+'pause
+
 Dim StdIn, StdOut
 Set StdIn = WScript.StdIn
 Set StdOut = WScript.StdOut
@@ -19,10 +23,12 @@ Function installCerts(ByVal address)
 	For Each oFile in oFolder.Files
 		If LCase(objFSO.GetExtensionName(oFile.Name)) = "cer" Or LCase(objFSO.GetExtensionName(oFile.Name)) = "crt" Then
 			'Can't use %JAVA_HOME% as the % marks don't appear?
-			objShell.SendKeys("""" & address & "\bin\keytool"" -keystore" & " """ & address & "\jre\lib\security\cacerts"" -importcert -alias " & oFile.Name & " -file " & oFile.Name & "{ENTER}")
+			Call objShell.SendKeys("""" & address & "\bin\keytool"" -keystore" & " """ & address & "\jre\lib\security\cacerts"" -importcert -alias " & oFile.Name & " -file " & oFile.Name & "{ENTER}")
+			wsh.sleep 1000
 			Call objShell.SendKeys("changeit{ENTER}")
-			Call objShell.SendKeys("changeit{ENTER}")
+			wsh.sleep 1000
 			Call objShell.SendKeys("yes{ENTER}")
+			wsh.sleep 1000
 		End If
 	Next
 	Call objShell.SendKeys("pause{ENTER}")
