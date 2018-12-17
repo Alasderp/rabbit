@@ -1,7 +1,13 @@
-'Run As CScript in CMD
-Call installCerts()
+'Run As CScript in CMD via .bat file
+Dim StdIn, StdOut
+Set StdIn = WScript.StdIn
+Set StdOut = WScript.StdOut
+StdOut.WriteLine "Please enter the address of your java directory"
+str = StdIn.ReadLine
 
-Function installCerts()
+Call installCerts(str)
+
+Function installCerts(ByVal address)
 	Set objFSO = Createobject("Scripting.FileSystemObject")
 	Set oFolder = objFSO.GetFolder(objFSO.GetParentFolderName(WScript.ScriptFullName))
 	Set objShell = Wscript.CreateObject ("Wscript.shell")
@@ -10,21 +16,14 @@ Function installCerts()
 	objShell.AppActivate "cmd.exe"
 	wsh.sleep 1000
 	
-	Dim StdIn, StdOut
-	Set StdIn = WScript.StdIn
-	Set StdOut = WScript.StdOut
-	StdOut.WriteLine "Please enter value"
-	str = StdIn.ReadLine
-	Wscript.Echo str
-
 	For Each oFile in oFolder.Files
 		If LCase(objFSO.GetExtensionName(oFile.Name)) = "cer" Or LCase(objFSO.GetExtensionName(oFile.Name)) = "crt" Then
-			'objShell.SendKeys("""%JAVA_HOME%\bin\keytool"" -keystore ""%JAVA_HOME%\jre\lib\security\cacerts"" -importcert -alias appls.global.paas.gsnetcloud.corp -file appls.global.paas.gsnetcloud.corp.crt{ENTER}")
-			objShell.SendKeys("""C:\Program Files\Java\jdk1.8.0_191\bin\keytool"" -keystore ""C:\Program Files\Java\jdk1.8.0_191\jre\lib\security\cacerts"" -importcert -alias appls.global.paas.gsnetcloud.corp -file appls.global.paas.gsnetcloud.corp.crt{ENTER}")
+			'Can't use %JAVA_HOME% as the % marks don't appear?
+			objShell.SendKeys("""" & address & "\bin\keytool"" -keystore" & " """ & address & "\jre\lib\security\cacerts"" -importcert -alias " & oFile.Name & " -file " & oFile.Name & "{ENTER}")
 			Call objShell.SendKeys("changeit{ENTER}")
 			Call objShell.SendKeys("changeit{ENTER}")
-			Call objShell.SendKeys("yes{ENTER}")		
+			Call objShell.SendKeys("yes{ENTER}")
 		End If
-		Call objShell.SendKeys("pause{ENTER}")
 	Next
+	Call objShell.SendKeys("pause{ENTER}")
 End Function
