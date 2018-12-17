@@ -6,7 +6,7 @@
 Dim StdIn, StdOut
 Set StdIn = WScript.StdIn
 Set StdOut = WScript.StdOut
-StdOut.WriteLine "Please enter the address of your java directory"
+		StdOut.WriteLine "Please enter the address of your java directory e.g. C:\Program Files\Java\jdk1.8.0_191"
 str = StdIn.ReadLine
 
 Call installCerts(str)
