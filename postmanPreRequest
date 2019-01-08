@@ -1,0 +1,18 @@
+postman.clearGlobalVariable('jwtToken');
+
+pm.sendRequest({ 
+  url: "URLHERE", 
+  method: 'POST', 
+  header: { 
+    'Content-Type': 'application-json',  
+    'otherHeaderValue': 'blah'
+  },
+  body: {
+     mode: 'raw',  
+     raw: JSON.stringify({"subject": "","audience": ""})
+  }
+}, function(err, response) { 
+    const jsonResponse = response.json(); 
+    postman.setGlobalVariable('jwtToken', jsonResponse.jwt);
+
+});
