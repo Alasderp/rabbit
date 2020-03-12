@@ -1,0 +1,30 @@
+
+python rabbitmqadmin -H RMQ_HOST_NAME -u USERNAME -p PASSWORD list bindings vhost source destination routing_key | awk -F' +\\||\\|' '$4 != $5{a[$3"|"$4"|"$5][$2]=1} END{ for ( i in a){printf i"|"; for (j in a[i]){ printf j"|"}; print ""}}' | sort
+
+1. Specify a field delimter for the data output by RabbitMQ
+	-F tells which character is dividing the fields. Regex can be used here instead.
+2. Specifying columns
+	$0 and $1 have special meaning in awk
+	$2 = vhost
+	$3 = exchange
+	$4 = destination
+	$5 = routing key
+3. Which lines to operate on
+	Awk will loop over lines of text.
+	Placing a boolean operator before a block of code will tell Awk whether to carry out operations on that line of code again.
+4. Creating a 2D array
+	a is the name of the array. It is Two-Dimensional
+	[$3"|"$4"|"$5] concatenates the values of three columns. The relevant values from each row are combined and added as a key. 
+	An array of associated vhosts is added as the value to each array key.
+	Array keys are unique, so when the same key is found the vhost is added to the existing sub-array of vhosts associated with that key
+5. Separating code blocks
+	Without the END statement awk would execute both code blocks at the same time for each line of text.
+	The END statement means it will execute the first code block for all lines of code before then moving on to the second code block.
+6. Looping over 2D array
+	All the keys in the array are looped over. The value of each key is printed.
+	Then, the sub-array associated with each key is looped over and each value is printed.
+	printf does not automatically append a new line whereas print will.
+	
+
+
+
