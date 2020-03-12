@@ -21,7 +21,7 @@ python rabbitmqadmin -H RMQ_HOST_NAME -u USERNAME -p PASSWORD list bindings vhos
 	The END statement means it will execute the first code block for all lines of text before then moving on to the second code block.
 6. Looping over 2D array
 	All the keys in the array are looped over. The value of each key is printed.
-	Then, the sub-array associated with each key is looped over and each value is printed.
+	Inside this loop, the sub-array associated with the current key is looped over and each value is printed.
 	printf does not automatically append a new line whereas print will.
 	
 
